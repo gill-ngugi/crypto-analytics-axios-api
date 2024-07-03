@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cryptocurrency Analytics App</title>
+  <style>
+    body { font-family: Arial, sans-serif; }
+    .coin { margin-bottom: 20px; }
+  </style>
+</head>
+<body>
+  <h1>Cryptocurrency Analytics</h1>
+  <div id="coins"></div>
+  <script>
+    async function fetchCoins() {
+      const response = await fetch('/api/coins');
+      const coins = await response.json();
+      const coinsDiv = document.getElementById('coins');
+      coinsDiv.innerHTML = coins.map(coin => `
+        <div class="coin">
+          <h2>${coin.name} (${coin.symbol.toUpperCase()})</h2>
+          <p>Current Price: $${coin.current_price}</p>
+          <p>Market Cap: $${coin.market_cap}</p>
+          <p>24h Volume: $${coin.total_volume}</p>
+        </div>
+      `).join('');
+    }
+
+    fetchCoins();
+  </script>
+</body>
+</html>
